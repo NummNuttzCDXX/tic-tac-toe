@@ -20,21 +20,28 @@ const gameBoard = (() => {
         })
     }
 
-    return {board, renderBoard}
+    let addListeners = (player) => {                               // Use an anonymous function that calls a function to run a function with a parameter
+        spaces.forEach((space) => {space.addEventListener('click', function() {
+            player.addMark(space)
+        })})
+    }
+
+    return {board, renderBoard, addListeners}
 })()
 
 // Player Object -- Factory Function
 const Player = (name, marker) => {
-    addMark = () => {
-        
+    let addMark = (space) => {
+        space.textContent = marker
     }
-    return {name, marker}
+    return {name, marker, addMark}
 }
 
 // Game Logic Object Module
 const game = (() => {
-    // ADD EVENT LISTENER TO THE SPACES TO RUN Player.addMark() 
+
 })()
 
 // TEMP
 gameBoard.renderBoard()
+player1 = Player('Player 1', 'X')
