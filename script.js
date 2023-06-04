@@ -22,7 +22,11 @@ const gameBoard = (() => {
 
     let addListeners = (player) => {                               // Use an anonymous function that calls a function to run a function with a parameter
         spaces.forEach((space) => {space.addEventListener('click', function() {
-            player.addMark(space)
+            if (space.textContent === 'X' || space.textContent === 'O') {
+                alert('Space taken!')
+            } else {
+                player.addMark(space)
+            }
         })})
     }
 
