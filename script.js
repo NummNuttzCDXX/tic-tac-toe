@@ -1,7 +1,9 @@
 // Tic-Tac-Toe Script
+// Global Variable
+const spaces = document.querySelectorAll('.space');
 
 // Gameboard Object Module
-const Game = (() => {
+const gameBoard = (() => {
     // Store gameboard inside an array
     let board = [
         'X','X','X',
@@ -22,6 +24,17 @@ const Game = (() => {
 })()
 
 // Player Object -- Factory Function
-const Player = () => {
-
+const Player = (name, marker) => {
+    addMark = () => {
+        
+    }
+    return {name, marker}
 }
+
+// Game Logic Object Module
+const game = (() => {
+    // ADD EVENT LISTENER TO THE SPACES TO RUN Player.addMark() 
+})()
+
+// TEMP
+gameBoard.renderBoard()
