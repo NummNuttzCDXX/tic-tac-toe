@@ -18,6 +18,8 @@ const gameBoard = (() => {
             space.textContent = board[i]
             ++i
         })
+        let container = document.querySelector('.game-container');
+        container.style.display = 'grid'
     }
 
     let addListeners = (player) => {                               // Use an anonymous function that calls a function to run a function with a parameter
