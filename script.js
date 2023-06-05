@@ -25,14 +25,26 @@ const gameBoard = (() => {
         names.style.display = 'inline'
     }
 
-    let addListeners = (player) => {                               // Use an anonymous function that calls a function to run a function with a parameter
-        spaces.forEach((space) => {space.addEventListener('click', function() {
-            if (space.textContent === 'X' || space.textContent === 'O') {
-                alert('Space taken!')
+    let addListeners = (player) => {
+        function checkTaken() {
+            if (this.textContent === 'X' || this.textContent === 'O') {
+                alert('Space taken!');
             } else {
-                player.addMark(space)
+                player.addMark(this);
             }
-        })})
+        }
+
+        spaces.forEach((space) => {
+            space.addEventListener('click', checkTaken)
+
+            // remove all event listeners once one of them fires
+            space.addEventListener('click', function removeListeners() {
+                spaces.forEach((space) => {
+                    space.removeEventListener('click', checkTaken)
+                    space.removeEventListener('click', removeListeners)
+                })
+            })
+        })
     }
 
     return {board, renderBoard, addListeners}
