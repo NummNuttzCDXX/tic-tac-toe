@@ -20,6 +20,9 @@ const gameBoard = (() => {
         })
         let container = document.querySelector('.game-container');
         container.style.display = 'grid'
+
+        let names = document.querySelector('.player-names')
+        names.style.display = 'inline'
     }
 
     let addListeners = (player) => {                               // Use an anonymous function that calls a function to run a function with a parameter
