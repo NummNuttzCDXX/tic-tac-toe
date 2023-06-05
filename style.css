@@ -20,6 +20,18 @@ body {
     align-items: center;
 }
 
+.head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.head p {
+    width: 350px;
+    text-align: center;
+}
+
 /* Content section of doc */
 .content {
     width: 100%;
