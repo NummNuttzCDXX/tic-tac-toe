@@ -94,6 +94,17 @@ body {
     color: var(--main);
 }
 
+.player-names {
+    display: none;
+}
+
+.player-names input {
+    appearance: none;
+    background-color: #ffffff00;
+    border: none;
+    color: var(--accentLT);
+}
+
 footer {
     width: 100%;
     height: 1.8rem;
