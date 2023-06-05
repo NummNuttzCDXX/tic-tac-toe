@@ -92,6 +92,8 @@ const game = (() => {
             } else if (gameBoard.board[2] === player2.marker) {
                 gameOver(player2.name)
             }
+        } else if (!gameBoard.board.includes('')) { // Checks if every space is filled -- meaning its a tie -- If the array DOESNT include an empty string
+            gameOver('Cat')
         }
     }
 
