@@ -2,6 +2,13 @@ body {
     margin: 0;
     height: 100vh;
 
+    --main: #2f2fa2;
+    --main2: #242582;
+    --accent: #553d67;
+    --accentLT: #f64c72;
+
+    background: linear-gradient(to right bottom, var(--main), var(--accent));
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -28,10 +35,16 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
 
-    background-color: #000000;
+    background-color: var(--accent);
 }
 
 .space {
     background-color: #fff;
     margin: 1px;
+}
+
+/* New Game Button */
+.play {
+    background-color: var(--accentLT);
+    
 }
