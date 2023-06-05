@@ -43,6 +43,21 @@ body {
     align-items: center;
 }
 
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    padding-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.51);
+    border: 3px solid var(--accentLT);
+}
+
+.menu label {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* Game Board */
 .game-container {
     width: 50vh;
