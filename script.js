@@ -1,9 +1,6 @@
 // Tic-Tac-Toe Script
 // Global Variable
 const spaces = document.querySelectorAll('.space')
-let spaceNum = []
-// Get data attr from spaces
-spaces.forEach((space) => {spaceNum.push(space.getAttribute('data'))})
 
 // Gameboard Object Module
 const gameBoard = (() => {
