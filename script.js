@@ -50,6 +50,19 @@ const Player = (name, marker) => {
 
 // Game Logic Object Module
 const game = (() => {
+    let createPlayers = () => {
+        const vs = document.querySelector('.menu input:checked')
+        if (vs.id === 'mult') {
+            let player2 = Player('Player 2', 'O')
+            return player2
+        } else if (vs.id === 'ai') {
+            let player2 = Player('Computer', 'O')
+            const p2Name = document.getElementById('name-2')
+            p2Name.value = player2.name
+            return player2
+        }
+    }
+
     let winCheck = () => {
         if (gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[1] === gameBoard.board[2]) { // Check top row
             if (gameBoard.board[0] === player1.marker) {
