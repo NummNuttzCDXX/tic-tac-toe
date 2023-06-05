@@ -6,7 +6,7 @@ const spaces = document.querySelectorAll('.space')
 const gameBoard = (() => {
     // Store gameboard inside an array
     let board = [
-        'X','X','X',
+        '','','',
         'O','O','O',
         'X','X','X'
     ];
@@ -36,6 +36,8 @@ const gameBoard = (() => {
 // Player Object -- Factory Function
 const Player = (name, marker) => {
     let addMark = (space) => {
+        const ind = space.getAttribute('data') - 1;
+        gameBoard.board[ind] = marker
         space.textContent = marker
     }
     return {name, marker, addMark}
