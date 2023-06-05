@@ -47,6 +47,19 @@ body {
 
 /* New Game Button */
 .play {
+    width: 7.5rem;
+    height: 2.3rem;
+    font-size: 1rem;
+
+    background-color: var(--main);
+    color: var(--accentLT);
+
+    border-radius: 20px;
+    border: 2px solid var(--accentLT);
+}
+
+.play:hover {
+    border-color: var(--main);
     background-color: var(--accentLT);
-    
+    color: var(--main);
 }
