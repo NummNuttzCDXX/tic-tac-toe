@@ -7,8 +7,8 @@ const gameBoard = (() => {
     // Store gameboard inside an array
     let board = [
         '','','',
-        'O','O','O',
-        'X','X','X'
+        '','','',
+        '','',''
     ];
 
     let renderBoard = () => {
