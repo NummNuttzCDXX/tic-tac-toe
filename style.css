@@ -96,6 +96,9 @@ body {
 
 .player-names {
     display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vh;
 }
 
 .player-names input {
@@ -103,6 +106,14 @@ body {
     background-color: #ffffff00;
     border: none;
     color: var(--accentLT);
+    font-size: 1rem;
+
+    width: 15ch;
+    height: 1.5rem;
+}
+
+.player-names img {
+    width: 1rem;
 }
 
 footer {
