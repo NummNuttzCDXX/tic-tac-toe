@@ -165,8 +165,11 @@ const game = (() => {
         const menu = document.querySelector('.menu')
         menu.style.display = 'none'
 
-        // game.turn = 1; // Set initial turn to P1
+        // Reset 
+        gameBoard.board.fill('')
+        game.turn = 1
 
+        // Game
         createPlayers()
         gameBoard.renderBoard()
         checkTurn()
