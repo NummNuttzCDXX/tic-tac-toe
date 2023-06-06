@@ -1,6 +1,8 @@
 // Tic-Tac-Toe Script
+
 // Global Variable
 const playBtn = document.querySelector('.play');
+
 // Gameboard Object Module
 const gameBoard = (() => {
     // Store gameboard inside an array
@@ -65,6 +67,7 @@ const Player = (name, marker, num) => {
             game.turn = 1
         }
     }
+
     return {name, marker, addMark}
 }
 
@@ -181,6 +184,16 @@ const game = (() => {
 
 // Game starts when button is pressed
 playBtn.addEventListener('click', game.newGame)
+
+// Change player names when the inputs change
+const names = document.querySelectorAll('.player-names input');
+names.forEach((input) => {
+    if (input.id === 'name-1') {
+        input.addEventListener('change', () => { player1.name = input.value })
+    } else if (input.id === 'name-2') {
+        input.addEventListener('change', () => { player2.name = input.value })
+    }
+})
 
 // Define players
 let player1 = Player('Player 1', 'X', 1),
