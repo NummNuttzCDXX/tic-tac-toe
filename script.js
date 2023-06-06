@@ -1,7 +1,6 @@
 // Tic-Tac-Toe Script
 // Global Variable
-const spaces = document.querySelectorAll('.space')
-
+const playBtn = document.querySelector('.play');
 // Gameboard Object Module
 const gameBoard = (() => {
     // Store gameboard inside an array
@@ -11,8 +10,9 @@ const gameBoard = (() => {
         '','',''
     ];
 
+    const spaces = document.querySelectorAll('.space');
+
     let renderBoard = () => {
-        const spaces = document.querySelectorAll('.space');
         let i = 0
         spaces.forEach((space) => {
             space.textContent = board[i]
@@ -27,10 +27,12 @@ const gameBoard = (() => {
 
     let addListeners = (player) => {
         function checkTaken() {
-            if (this.textContent === 'X' || this.textContent === 'O') {
+            let ind = this.id;
+            if (gameBoard.board[ind] === 'X' || gameBoard.board[ind] === 'O') {
                 alert('Space taken!');
             } else {
                 player.addMark(this);
+                game.makeMove()
             }
         }
 
@@ -51,27 +53,43 @@ const gameBoard = (() => {
 })()
 
 // Player Object -- Factory Function
-const Player = (name, marker) => {
+const Player = (name, marker, num) => {
     let addMark = (space) => {
         const ind = space.getAttribute('data') - 1;
         gameBoard.board[ind] = marker
         space.textContent = marker
+
+        if (num === 1) {
+            game.turn = 2
+        } else if (num === 2) {
+            game.turn = 1
+        }
     }
     return {name, marker, addMark}
 }
 
 // Game Logic Object Module
 const game = (() => {
+    // This will be equal to which players turn it is -- Player 1 starts
+    let turn = 1,
+    playing = true // Is the game over?
+
     let createPlayers = () => {
         const vs = document.querySelector('.menu input:checked')
         if (vs.id === 'mult') {
-            let player2 = Player('Player 2', 'O')
-            return player2
+            player2.name = 'Player 2'
         } else if (vs.id === 'ai') {
-            let player2 = Player('Computer', 'O')
+            player2.name = 'Computer'
             const p2Name = document.getElementById('name-2')
             p2Name.value = player2.name
-            return player2
+        }
+    }
+
+    const checkTurn = () => {
+        if (game.turn === 1) {
+            gameBoard.addListeners(player1)
+        } else if (game.turn === 2) {
+            gameBoard.addListeners(player2)
         }
     }
 
@@ -131,11 +149,39 @@ const game = (() => {
 
     let gameOver = (player) => {
         alert(player + ' wins!!')
+        playing = false
     }
 
-    return {winCheck}
+    // This will start a new game
+    let newGame = () => {
+        // Make menu disapear
+        const menu = document.querySelector('.menu')
+        menu.style.display = 'none'
+
+        // game.turn = 1; // Set initial turn to P1
+
+        createPlayers()
+        gameBoard.renderBoard()
+        checkTurn()
+        makeMove()
+    }
+
+    const makeMove = () => {
+        if (!playing) return; // If the game is not playing, exit the function
+
+        winCheck(); // Check for a win condition
+
+        if (!playing) return; // If the game is not playing after winCheck, exit the function
+
+        checkTurn(); // Add event listeners for the next player's turn
+    };
+
+    return {newGame, turn, makeMove}
 })()
 
-// TEMP
-gameBoard.renderBoard()
-let player1 = Player('Player 1', 'X')
+// Game starts when button is pressed
+playBtn.addEventListener('click', game.newGame)
+
+// Define players
+let player1 = Player('Player 1', 'X', 1),
+player2 = Player('Player 2', 'O', 2)
