@@ -24,7 +24,7 @@ const gameBoard = (() => {
         container.style.display = 'grid'
 
         let names = document.querySelector('.player-names')
-        names.style.display = 'inline'
+        names.style.display = 'flex'
     }
 
     let addListeners = (player) => {
