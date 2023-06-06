@@ -85,6 +85,10 @@ const game = (() => {
             player2.name = 'Computer'
             const p2Name = document.getElementById('name-2')
             p2Name.value = player2.name
+
+            const p2Icon = document.querySelector('#name-2 + img')
+            p2Icon.style.display = 'none'
+            p2Name.disabled = true
         }
     }
 
