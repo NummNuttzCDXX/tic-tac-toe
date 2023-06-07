@@ -7,9 +7,9 @@ const playBtn = document.querySelector('.play');
 const gameBoard = (() => {
     // Store gameboard inside an array
     let board = [
-        '','','',
-        '','','',
-        '','',''
+        '', '', '',
+        '', '', '',
+        '', '', ''
     ];
 
     const spaces = document.querySelectorAll('.space');
@@ -27,31 +27,45 @@ const gameBoard = (() => {
         names.style.display = 'flex'
     }
 
-    let addListeners = (player) => {
-        function checkTaken() {
-            let ind = this.getAttribute('data');
-            if (gameBoard.board[ind-1] === 'X' || gameBoard.board[ind-1] === 'O') {
-                alert('Space taken!');
-            } else {
-                player.addMark(this);
-                game.makeMove()
-            }
+    // Module within a Module
+    const listener = (() => {
+        // This almost pointless function just makes it easier to add and remove the listener since it needs an argument
+        function anonymous () {
+            checkTaken(this)
         }
 
-        spaces.forEach((space) => {
-            space.addEventListener('click', checkTaken)
-
-            // remove all event listeners once one of them fires
-            space.addEventListener('click', function removeListeners() {
-                spaces.forEach((space) => {
-                    space.removeEventListener('click', checkTaken)
-                    space.removeEventListener('click', removeListeners)
-                })
+        const add = () => {
+            spaces.forEach((space) => {
+                space.addEventListener('click', anonymous)
             })
-        })
+
+        }
+
+        const remove = () => {
+            spaces.forEach((space) => {
+                space.removeEventListener('click', anonymous)
+            })
+        }
+
+        return {add, remove}
+    })()
+
+
+    const checkTaken = (space) => {
+        let ind = space.getAttribute('data');
+        if (gameBoard.board[ind - 1] === '') {
+            if (game.turn === 1) {
+                player1.addMark(space);
+            } else if (game.turn === 2) {
+                player2.addMark(space);
+            }
+            game.makeMove()
+        } else {
+            alert('Space Taken!!')
+        }
     }
 
-    return {board, renderBoard, addListeners}
+    return { board, renderBoard, listener }
 })()
 
 // Player Object -- Factory Function
@@ -68,14 +82,14 @@ const Player = (name, marker, num) => {
         }
     }
 
-    return {name, marker, addMark}
+    return { name, marker, addMark }
 }
 
 // Game Logic Object Module
 const game = (() => {
     // This will be equal to which players turn it is -- Player 1 starts
     let turn = 1,
-    playing = true // Is the game over?
+        playing = true // Is the game over?
 
     let createPlayers = () => {
         const vs = document.querySelector('.menu input:checked')
@@ -94,9 +108,9 @@ const game = (() => {
 
     const checkTurn = () => {
         if (game.turn === 1) {
-            gameBoard.addListeners(player1)
+            gameBoard.checkTaken(player1)
         } else if (game.turn === 2) {
-            gameBoard.addListeners(player2)
+            gameBoard.checkTaken(player2)
         }
     }
 
@@ -155,12 +169,15 @@ const game = (() => {
     }
 
     let gameOver = (player) => {
+        gameBoard.listener.remove()
         alert(player + ' wins!!')
         playing = false
     }
 
     // This will start a new game
     let newGame = () => {
+        gameBoard.listener.add()
+
         // Make menu disapear
         const menu = document.querySelector('.menu')
         menu.style.display = 'none'
@@ -172,8 +189,6 @@ const game = (() => {
         // Game
         createPlayers()
         gameBoard.renderBoard()
-        checkTurn()
-        makeMove()
     }
 
     const makeMove = () => {
@@ -183,10 +198,9 @@ const game = (() => {
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
 
-        checkTurn(); // Add event listeners for the next player's turn
     };
 
-    return {newGame, turn, makeMove}
+    return { newGame, turn, makeMove }
 })()
 
 // Game starts when button is pressed
@@ -204,4 +218,4 @@ names.forEach((input) => {
 
 // Define players
 let player1 = Player('Player 1', 'X', 1),
-player2 = Player('Player 2', 'O', 2)
+    player2 = Player('Player 2', 'O', 2)
