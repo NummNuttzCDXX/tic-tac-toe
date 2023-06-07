@@ -29,8 +29,8 @@ const gameBoard = (() => {
 
     let addListeners = (player) => {
         function checkTaken() {
-            let ind = this.id;
-            if (gameBoard.board[ind] === 'X' || gameBoard.board[ind] === 'O') {
+            let ind = this.getAttribute('data');
+            if (gameBoard.board[ind-1] === 'X' || gameBoard.board[ind-1] === 'O') {
                 alert('Space taken!');
             } else {
                 player.addMark(this);
