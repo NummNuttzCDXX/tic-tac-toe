@@ -115,49 +115,49 @@ const game = (() => {
     }
 
     let winCheck = () => {
-        if (gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[1] === gameBoard.board[2]) { // Check top row
+        if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[1] === gameBoard.board[2]) { // Check top row
             if (gameBoard.board[0] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[0] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[0] === gameBoard.board[3] && gameBoard.board[3] === gameBoard.board[6]) { // Check left side
+        } else if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[3] && gameBoard.board[3] === gameBoard.board[6]) { // Check left side
             if (gameBoard.board[0] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[0] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[0] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[8]) { // Check diagonal right
+        } else if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[8]) { // Check diagonal right
             if (gameBoard.board[0] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[0] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[3] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[5]) { // Check middle row
+        } else if (gameBoard.board[3] !== '' && gameBoard.board[3] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[5]) { // Check middle row
             if (gameBoard.board[3] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[3] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[6] === gameBoard.board[7] && gameBoard.board[7] === gameBoard.board[8]) { // Check bottom row
+        } else if (gameBoard.board[6] !== '' && gameBoard.board[6] === gameBoard.board[7] && gameBoard.board[7] === gameBoard.board[8]) { // Check bottom row
             if (gameBoard.board[6] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[6] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[1] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[7]) { // Check middle column
+        } else if (gameBoard.board[1] !== '' && gameBoard.board[1] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[7]) { // Check middle column
             if (gameBoard.board[1] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[1] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[2] === gameBoard.board[5] && gameBoard.board[5] === gameBoard.board[8]) { // Check right column
+        } else if (gameBoard.board[2] !== '' && gameBoard.board[2] === gameBoard.board[5] && gameBoard.board[5] === gameBoard.board[8]) { // Check right column
             if (gameBoard.board[2] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[2] === player2.marker) {
                 gameOver(player2.name)
             }
-        } else if (gameBoard.board[2] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[6]) { // Check diagonal left
+        } else if (gameBoard.board[2] !== '' && gameBoard.board[2] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[6]) { // Check diagonal left
             if (gameBoard.board[2] === player1.marker) {
                 gameOver(player1.name)
             } else if (gameBoard.board[2] === player2.marker) {
