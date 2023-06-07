@@ -185,6 +185,7 @@ const game = (() => {
         // Reset 
         gameBoard.board.fill('')
         game.turn = 1
+        playing = true
 
         // Game
         createPlayers()
