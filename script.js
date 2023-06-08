@@ -85,6 +85,17 @@ const Player = (name, marker, num) => {
     return { name, marker, addMark }
 }
 
+const Computer = (name, marker, num) => {
+    const prototype = Player(name, marker, num) // This allows Computer to inherit from Player -- Setting proto to Player object
+
+    const minimax = () => {
+        
+    }
+
+    // Assign all the properties of proto to Comp plus adding object with Comp's own properties like usual
+    return Object.assign({}, prototype, {minimax})
+}
+
 // Game Logic Object Module
 const game = (() => {
     // This will be equal to which players turn it is -- Player 1 starts
@@ -94,12 +105,16 @@ const game = (() => {
     let createPlayers = () => {
         const vs = document.querySelector('.menu input:checked')
         if (vs.id === 'mult') {
-            player2.name = 'Player 2'
+            // Initialize player2 Object
+            let player2 = Player('Player 2', 'O', 2)
         } else if (vs.id === 'ai') {
-            player2.name = 'Computer'
+            // Initialize player2 Computer Object
+            let player2 = Computer('Computer', 'O', 2)
+            // Set the name input to be object name
             const p2Name = document.getElementById('name-2')
             p2Name.value = player2.name
 
+            // Remove edit Icon next to Computer name
             const p2Icon = document.querySelector('#name-2 + img')
             p2Icon.style.display = 'none'
             p2Name.disabled = true
@@ -217,6 +232,5 @@ names.forEach((input) => {
     }
 })
 
-// Define players
-let player1 = Player('Player 1', 'X', 1),
-    player2 = Player('Player 2', 'O', 2)
+// Define player
+let player1 = Player('Player 1', 'X', 1)
