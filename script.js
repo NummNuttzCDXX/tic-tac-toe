@@ -14,6 +14,18 @@ const gameBoard = (() => {
 
     const spaces = document.querySelectorAll('.space');
 
+    const getEmptySpaces = () => {
+        let emptySpaces = []; // Define array to hold inices of empty spaces
+        for (let i = 0; i < board.length; ++i) { // Loop through board
+            // If space is empty, add the index to the array
+            if (board[i] === '') {
+                emptySpaces.push(i)
+            }
+        }
+
+        return emptySpaces;
+    }
+
     let renderBoard = () => {
         let i = 0
         spaces.forEach((space) => {
@@ -65,7 +77,7 @@ const gameBoard = (() => {
         }
     }
 
-    return { board, renderBoard, listener }
+    return { board, renderBoard, listener, getEmptySpaces }
 })()
 
 // Player Object -- Factory Function
@@ -88,8 +100,71 @@ const Player = (name, marker, num) => {
 const Computer = (name, marker, num) => {
     const prototype = Player(name, marker, num) // This allows Computer to inherit from Player -- Setting proto to Player object
 
-    const minimax = () => {
-        
+    const minimax = (board, player) => {
+        // Get empty spaces
+        let emptySpaces = gameBoard.getEmptySpaces()
+
+        // Check for Terminal States such as win, lose, or tie and return a value accordingly
+        if (game.winCheck(board, player1.marker)) { // if player1 wins, sets the space score to -10
+            return {score: -10}
+        } else if (game.winCheck(board, player2.marker)) {
+            return {score: 10}
+        } else if (emptySpaces.length === 0) { // If no more empty spaces set the space score to 0
+            return {score: 0}
+        }
+
+        // An array to collect all the move Objects
+        let moves = [];
+
+        // Loop through empty spots
+        for (let i = 0; i < emptySpaces.length; i++) {
+            // Create an Object for each and store the index of that spot
+            let move = {}
+            // move.index = board[emptySpaces[i]]; // This sets index property of move{} to the value of the emptySpace indice
+            move.index = emptySpaces[i]
+
+            // Set the empty space to the current player marker
+            board[emptySpaces[i]] = player.marker
+            
+            /* Collect the score resulted from calling minimax
+               on the oponent of the current player */
+            if (player === player2) {
+                let result = minimax(board, player1)
+                move.score = result.score
+            } else if (player === player1) {
+                let result = minimax(board, player2) 
+                move.score = result.score
+            }
+
+            // Reset the spot to empty
+            board[emptySpaces[i]] = ''
+
+            // Push the Object to the Array
+            moves.push(move)
+        }
+
+        // If it is the computers turn loop over the moves and choose the move with the highest score
+        let bestMove;
+        if (player === player2) {
+            let bestScore = -Infinity
+            for (let i = 0; i < moves.length; ++i) {
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score
+                    bestMove = i
+                }
+            }
+        } else if (player === player1) { // If it is the users turn choose the move with lowest score
+            let bestScore = Infinity
+            for (let i = 0; i < moves.length; ++i) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score
+                    bestMove = i
+                }
+            }
+        }
+
+        // Return the chosen move (object) from the moves array
+        return moves[bestMove]
     }
 
     // Assign all the properties of proto to Comp plus adding object with Comp's own properties like usual
