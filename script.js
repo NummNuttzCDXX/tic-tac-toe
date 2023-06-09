@@ -187,7 +187,7 @@ const game = (() => {
 
     };
 
-    return { newGame, turn, makeMove }
+    return { newGame, turn, makeMove, winCheck }
 })()
 
 // Game starts when button is pressed
