@@ -106,10 +106,10 @@ const game = (() => {
         const vs = document.querySelector('.menu input:checked')
         if (vs.id === 'mult') {
             // Initialize player2 Object
-            let player2 = Player('Player 2', 'O', 2)
+            player2 = Player('Player 2', 'O', 2)
         } else if (vs.id === 'ai') {
             // Initialize player2 Computer Object
-            let player2 = Computer('Computer', 'O', 2)
+            player2 = Computer('Computer', 'O', 2)
             // Set the name input to be object name
             const p2Name = document.getElementById('name-2')
             p2Name.value = player2.name
@@ -233,4 +233,5 @@ names.forEach((input) => {
 })
 
 // Define player
-let player1 = Player('Player 1', 'X', 1)
+let player1 = Player('Player 1', 'X', 1),
+player2;
