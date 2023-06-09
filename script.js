@@ -129,57 +129,21 @@ const game = (() => {
         }
     }
 
-    let winCheck = () => {
-        if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[1] === gameBoard.board[2]) { // Check top row
-            if (gameBoard.board[0] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[0] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[3] && gameBoard.board[3] === gameBoard.board[6]) { // Check left side
-            if (gameBoard.board[0] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[0] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[0] !== '' && gameBoard.board[0] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[8]) { // Check diagonal right
-            if (gameBoard.board[0] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[0] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[3] !== '' && gameBoard.board[3] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[5]) { // Check middle row
-            if (gameBoard.board[3] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[3] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[6] !== '' && gameBoard.board[6] === gameBoard.board[7] && gameBoard.board[7] === gameBoard.board[8]) { // Check bottom row
-            if (gameBoard.board[6] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[6] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[1] !== '' && gameBoard.board[1] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[7]) { // Check middle column
-            if (gameBoard.board[1] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[1] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[2] !== '' && gameBoard.board[2] === gameBoard.board[5] && gameBoard.board[5] === gameBoard.board[8]) { // Check right column
-            if (gameBoard.board[2] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[2] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (gameBoard.board[2] !== '' && gameBoard.board[2] === gameBoard.board[4] && gameBoard.board[4] === gameBoard.board[6]) { // Check diagonal left
-            if (gameBoard.board[2] === player1.marker) {
-                gameOver(player1.name)
-            } else if (gameBoard.board[2] === player2.marker) {
-                gameOver(player2.name)
-            }
-        } else if (!gameBoard.board.includes('')) { // Checks if every space is filled -- meaning its a tie -- If the array DOESNT include an empty string
-            gameOver('Cat')
+    // Now Checks if a particular player wins or loses and returns true or false
+    let winCheck = (board, player) => {
+        if (
+            (board[0] == player && board[1] == player && board[2] == player) ||
+            (board[3] == player && board[4] == player && board[5] == player) ||
+            (board[6] == player && board[7] == player && board[8] == player) ||
+            (board[0] == player && board[3] == player && board[6] == player) ||
+            (board[1] == player && board[4] == player && board[7] == player) ||
+            (board[2] == player && board[5] == player && board[8] == player) ||
+            (board[0] == player && board[4] == player && board[8] == player) ||
+            (board[2] == player && board[4] == player && board[6] == player)
+            ) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -210,7 +174,14 @@ const game = (() => {
     const makeMove = () => {
         if (!playing) return; // If the game is not playing, exit the function
 
-        winCheck(); // Check for a win condition
+        // Check for winner
+        if (winCheck(gameBoard.board, player1.marker)) {
+            gameOver(player1.name)
+        } else if (winCheck(gameBoard.board, player2.marker)) {
+            gameOver(player2.name)
+        } else if (!gameBoard.board.includes('')) {
+            gameOver('Cat')
+        }
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
 
