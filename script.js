@@ -82,6 +82,8 @@ const gameBoard = (() => {
 
 // Player Object -- Factory Function
 const Player = (name, marker, num) => {
+    let score = 0
+
     let addMark = (space) => {
         const ind = space.getAttribute('data') - 1;
         gameBoard.board[ind] = marker
@@ -232,6 +234,7 @@ const game = (() => {
 
     let gameOver = (player) => {
         gameBoard.listener.remove()
+        updateScoreboard(player)
         alert(player + ' wins!!')
         playing = false
     }
@@ -277,6 +280,28 @@ const game = (() => {
         if (!playing) return; // If the game is not playing after winCheck, exit the function
     };
 
+    const updateScoreboard = (winner) => {
+        // Get Player containers to hold name/score
+        const p1 = document.querySelector('.player1'),
+        p2 = document.querySelector('.player2');
+
+        // Show player names on the board
+        p1.textContent = player1.name + ':';
+        p2.textContent = player2.name + ':';
+        if (winner === player1.name) {
+            player1.score += 1
+            p1.textContent += ' ' + player1.score;
+            p2.textContent += ' ' + player2.score;
+        } else {
+            player2.score += 1
+            p2.textContent += ' ' + player2.score;
+            p1.textContent += ' ' + player1.score;
+        }
+
+        score1 = player1.score
+        score2 = player2.score
+    }
+
     return { newGame, turn, makeMove, winCheck }
 })()
 
@@ -295,4 +320,6 @@ names.forEach((input) => {
 
 // Define player
 let player1 = Player('Player 1', 'X', 1),
-player2;
+player2,
+score1 = 0,
+score2 = 0;

@@ -59,10 +59,20 @@ body {
     margin-right: 10px;
 }
 
+.scoreboard {
+    width: 30vh;
+    height: 25vh;
+    position: absolute; /* Position relative to game-container */
+    top: 0; /* Line top up with game-container */
+    left: calc(-30vh + -20px); /* Place 20px to left of container */
+    border: 2px solid red;
+}
+
 /* Game Board */
 .game-container {
     width: 50vh;
     height: 50vh;
+    position: relative;
 
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
