@@ -69,7 +69,9 @@ const gameBoard = (() => {
             if (game.turn === 1) {
                 player1.addMark(space);
             } else if (game.turn === 2) {
-                player2.addMark(space);
+                if (player2.ai) {
+                    return
+                } else {player2.addMark(space);}
             }
             game.makeMove()
         } else {
