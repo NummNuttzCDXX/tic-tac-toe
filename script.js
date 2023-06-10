@@ -268,12 +268,13 @@ const game = (() => {
 
         // If player2 is a computer and its computers turn -- Computer plays
         if (player2.ai && game.turn === 2) {
-            player2.addMark(player2.getSpace())
-            makeMove()
+            setTimeout(() => {  // Run this code after 500 millisecond delay -- To simulate thinking
+                player2.addMark(player2.getSpace())
+                makeMove()
+            }, 500)
         }
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
-
     };
 
     return { newGame, turn, makeMove, winCheck }
