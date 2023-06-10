@@ -68,6 +68,10 @@ body {
     border: 2px solid red;
 }
 
+.scoreboard .heading {
+    text-align: center;
+}
+
 /* Game Board */
 .game-container {
     width: 50vh;
