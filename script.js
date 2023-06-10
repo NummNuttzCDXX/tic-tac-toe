@@ -100,6 +100,8 @@ const Player = (name, marker, num) => {
 const Computer = (name, marker, num) => {
     const prototype = Player(name, marker, num) // This allows Computer to inherit from Player -- Setting proto to Player object
 
+    const ai = true; // Give property of ai to test if player is an ai
+
     const minimax = (board, player) => {
         // Get empty spaces
         let emptySpaces = gameBoard.getEmptySpaces()
@@ -167,8 +169,14 @@ const Computer = (name, marker, num) => {
         return moves[bestMove]
     }
 
+    const getSpace = () => {
+        let index = minimax(gameBoard.board, player2).index;
+        let space = document.querySelector('.space[data="' + (index + 1) + '"')
+        return space
+    }
+
     // Assign all the properties of proto to Comp plus adding object with Comp's own properties like usual
-    return Object.assign({}, prototype, {minimax})
+    return Object.assign({}, prototype, {minimax, getSpace, ai})
 }
 
 // Game Logic Object Module
@@ -256,6 +264,12 @@ const game = (() => {
             gameOver(player2.name)
         } else if (!gameBoard.board.includes('')) {
             gameOver('Cat')
+        }
+
+        // If player2 is a computer and its computers turn -- Computer plays
+        if (player2.ai && game.turn === 2) {
+            player2.addMark(player2.getSpace())
+            makeMove()
         }
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
