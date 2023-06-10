@@ -286,19 +286,29 @@ const game = (() => {
     const updateScoreboard = (winner) => {
         // Get Player containers to hold name/score
         const p1 = document.querySelector('.player1'),
-        p2 = document.querySelector('.player2');
+        p2 = document.querySelector('.player2'),
+        tie = document.querySelector('.tie')
 
         // Show player names on the board
         p1.textContent = player1.name + ':';
         p2.textContent = player2.name + ':';
+
+        // Set tie counter but hidden until the game ties
+        tie.textContent = 'Tie: '
+        tie.style.display = 'none'
+
         if (winner === player1.name) {
             player1.score += 1
             p1.textContent += ' ' + player1.score;
             p2.textContent += ' ' + player2.score;
-        } else {
+        } else if (winner === player2.name) {
             player2.score += 1
             p2.textContent += ' ' + player2.score;
             p1.textContent += ' ' + player1.score;
+        } else {
+            scoreTie += 1
+            tie.textContent += scoreTie
+            tie.style.display = 'block'
         }
 
         score1 = player1.score
@@ -333,4 +343,5 @@ names.forEach((input) => {
 let player1 = Player('Player 1', 'X', 1),
 player2,
 score1 = 0,
-score2 = 0;
+score2 = 0,
+scoreTie = 0
