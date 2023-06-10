@@ -204,7 +204,7 @@ const game = (() => {
 
             // Remove edit Icon next to Computer name
             const p2Icon = document.querySelector('#name-2 + img')
-            p2Icon.style.display = 'none'
+            p2Icon.style.visibility = 'hidden'
             p2Name.disabled = true
         }
     }
