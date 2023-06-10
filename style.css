@@ -128,6 +128,10 @@ body {
     height: 1.5rem;
 }
 
+.player-names input::placeholder {
+    color: var(--accentLT);
+}
+
 .player-names img {
     width: 1rem;
 }

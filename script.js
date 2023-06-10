@@ -96,7 +96,7 @@ const Player = (name, marker, num) => {
         }
     }
 
-    return { name, marker, addMark }
+    return { name, marker, addMark, score }
 }
 
 const Computer = (name, marker, num) => {
@@ -185,7 +185,8 @@ const Computer = (name, marker, num) => {
 const game = (() => {
     // This will be equal to which players turn it is -- Player 1 starts
     let turn = 1,
-        playing = true // Is the game over?
+        playing = true, // Is the game over?
+        times = 0;
 
     let createPlayers = () => {
         const vs = document.querySelector('.menu input:checked')
@@ -253,7 +254,7 @@ const game = (() => {
         playing = true
 
         // Game
-        createPlayers()
+        if (times === 0) {createPlayers(); times += 1} else times += 1
         gameBoard.renderBoard()
     }
 
@@ -312,9 +313,17 @@ playBtn.addEventListener('click', game.newGame)
 const names = document.querySelectorAll('.player-names input');
 names.forEach((input) => {
     if (input.id === 'name-1') {
-        input.addEventListener('change', () => { player1.name = input.value })
+        input.addEventListener('change', () => {
+            player1.name = input.value
+            document.querySelector('.player1').textContent = input.value + ': ' + score1
+            if (input.value === '') {document.querySelector('.player1').textContent = 'Player 1'}
+        })
     } else if (input.id === 'name-2') {
-        input.addEventListener('change', () => { player2.name = input.value })
+        input.addEventListener('change', () => { 
+            player2.name = input.value
+            document.querySelector('.player2').textContent = input.value + ': ' + score2
+            if (input.value === '') {document.querySelector('.player2').textContent = 'Player 2'}
+        })
     }
 })
 
