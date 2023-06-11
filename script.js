@@ -188,22 +188,26 @@ const Computer = (name, marker, num, dif) => {
 
     const takeTurn = () => {
         if (dif === 0) {
-            // Get the indices of the empty spaces
-            const emptySpaces = gameBoard.getEmptySpaces();
-            /* Get the number of empty spaces there are
-               and choose a random number up to num of empty
-               then choose that number in the array */
-            let index = emptySpaces[getRandomNumber(emptySpaces.length - 1)];
-            let space = document.querySelector('.space[data="' + (index + 1) + '"]')
+            setTimeout(() => {
+                // Get the indices of the empty spaces
+                const emptySpaces = gameBoard.getEmptySpaces();
+                /* Get the number of empty spaces there are
+                and choose a random number up to num of empty
+                then choose that number in the array */
+                let index = emptySpaces[getRandomNumber(emptySpaces.length - 1)];
+                let space = document.querySelector('.space[data="' + (index + 1) + '"]')
 
-            player2.addMark(space)
+                player2.addMark(space)
+                game.makeMove()
+            }, 500)
+            
         } else if (dif === 1) { // Impossible
             // Run this code after 500 millisecond delay -- To simulate thinking
             setTimeout(() => {
-                player2.addMark(player2.getSpace())
+                player2.addMark(getSpace())
+                game.makeMove()
             }, 500)
         }
-        game.makeMove(); // Run this after ai takes turn so we can check if he won
     }
 
     // Assign all the properties of proto to Comp plus adding object with Comp's own properties like usual
@@ -268,6 +272,7 @@ const game = (() => {
 
     let gameOver = (player) => {
         gameBoard.listener.remove()
+        turn = 0
         updateScoreboard(player)
         alert(player + ' wins!!')
         playing = false
@@ -294,6 +299,11 @@ const game = (() => {
     const makeMove = () => {
         if (!playing) return; // If the game is not playing, exit the function
 
+        // If player2 is a computer and its computers turn -- Computer plays
+        if (player2.ai && game.turn === 2) {
+            player2.takeTurn()
+        }
+
         // Check for winner
         if (winCheck(gameBoard.board, player1.marker)) {
             gameOver(player1.name)
@@ -301,11 +311,6 @@ const game = (() => {
             gameOver(player2.name)
         } else if (!gameBoard.board.includes('')) {
             gameOver('Cat')
-        }
-
-        // If player2 is a computer and its computers turn -- Computer plays
-        if (player2.ai && game.turn === 2) {
-            player2.takeTurn()
         }
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
