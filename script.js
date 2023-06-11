@@ -15,7 +15,7 @@ const gameBoard = (() => {
     const spaces = document.querySelectorAll('.space');
 
     const getEmptySpaces = () => {
-        let emptySpaces = []; // Define array to hold inices of empty spaces
+        let emptySpaces = []; // Define array to hold indices of empty spaces
         for (let i = 0; i < board.length; ++i) { // Loop through board
             // If space is empty, add the index to the array
             if (board[i] === '') {
@@ -69,6 +69,9 @@ const gameBoard = (() => {
             if (game.turn === 1) {
                 player1.addMark(space);
             } else if (game.turn === 2) {
+                // This function only runs when a space is clicked
+                // so we cant do the ai's turn in this function
+                // Only multiplayer
                 if (player2.ai) {
                     return
                 } else {player2.addMark(space);}
@@ -101,7 +104,7 @@ const Player = (name, marker, num) => {
     return { name, marker, addMark, score }
 }
 
-const Computer = (name, marker, num) => {
+const Computer = (name, marker, num, dif) => {
     const prototype = Player(name, marker, num) // This allows Computer to inherit from Player -- Setting proto to Player object
 
     const ai = true; // Give property of ai to test if player is an ai
@@ -173,14 +176,38 @@ const Computer = (name, marker, num) => {
         return moves[bestMove]
     }
 
+    const getRandomNumber = (x) => {
+        return Math.floor(Math.random() * x); // Get random number from 0 to x
+    }
+
     const getSpace = () => {
         let index = minimax(gameBoard.board, player2).index;
         let space = document.querySelector('.space[data="' + (index + 1) + '"')
         return space
     }
 
+    const takeTurn = () => {
+        if (dif === 0) {
+            // Get the indices of the empty spaces
+            const emptySpaces = gameBoard.getEmptySpaces();
+            /* Get the number of empty spaces there are
+               and choose a random number up to num of empty
+               then choose that number in the array */
+            let index = emptySpaces[getRandomNumber(emptySpaces.length - 1)];
+            let space = document.querySelector('.space[data="' + (index + 1) + '"]')
+
+            player2.addMark(space)
+        } else if (dif === 1) { // Impossible
+            // Run this code after 500 millisecond delay -- To simulate thinking
+            setTimeout(() => {
+                player2.addMark(player2.getSpace())
+            }, 500)
+        }
+        game.makeMove(); // Run this after ai takes turn so we can check if he won
+    }
+
     // Assign all the properties of proto to Comp plus adding object with Comp's own properties like usual
-    return Object.assign({}, prototype, {minimax, getSpace, ai})
+    return Object.assign({}, prototype, {ai, dif, takeTurn})
 }
 
 // Game Logic Object Module
@@ -196,8 +223,12 @@ const game = (() => {
             // Initialize player2 Object
             player2 = Player('Player 2', 'O', 2)
         } else if (vs.id === 'ai') {
+            // This will get the index of the selected difficulty option
+            const dif = document.querySelector('select').selectedIndex;
+
             // Initialize player2 Computer Object
-            player2 = Computer('Computer', 'O', 2)
+            player2 = Computer('Computer', 'O', 2, dif)
+
             // Set the name input to be object name
             const p2Name = document.getElementById('name-2')
             p2Name.value = player2.name
@@ -274,10 +305,7 @@ const game = (() => {
 
         // If player2 is a computer and its computers turn -- Computer plays
         if (player2.ai && game.turn === 2) {
-            setTimeout(() => {  // Run this code after 500 millisecond delay -- To simulate thinking
-                player2.addMark(player2.getSpace())
-                makeMove()
-            }, 500)
+            player2.takeTurn()
         }
 
         if (!playing) return; // If the game is not playing after winCheck, exit the function
