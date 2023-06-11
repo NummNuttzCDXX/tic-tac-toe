@@ -321,10 +321,6 @@ const game = (() => {
         p1.textContent = player1.name + ':';
         p2.textContent = player2.name + ':';
 
-        // Set tie counter but hidden until the game ties
-        tie.textContent = 'Tie: '
-        tie.style.display = 'none'
-
         if (winner === player1.name) {
             player1.score += 1
             p1.textContent += ' ' + player1.score;
@@ -335,8 +331,11 @@ const game = (() => {
             p1.textContent += ' ' + player1.score;
         } else {
             scoreTie += 1
+            tie.textContent = 'Tie: '
             tie.textContent += scoreTie
             tie.style.display = 'block'
+            p1.textContent += ' ' + player1.score;
+            p2.textContent += ' ' + player2.score;
         }
 
         score1 = player1.score

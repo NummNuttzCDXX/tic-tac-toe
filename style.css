@@ -91,6 +91,10 @@ body {
     text-align: center;
 }
 
+.scoreboard .tie {
+    display: none;
+}
+
 /* Game Board */
 .game-container {
     width: 50vh;
