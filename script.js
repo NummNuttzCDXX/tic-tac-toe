@@ -90,9 +90,14 @@ const Player = (name, marker, num) => {
     let score = 0
 
     let addMark = (space) => {
-        const ind = space.getAttribute('data') - 1;
-        gameBoard.board[ind] = marker
-        space.textContent = marker
+        try {
+            const ind = space.getAttribute('data') - 1;
+            gameBoard.board[ind] = marker
+            space.textContent = marker
+        } catch (error) {
+            if (space === null) throw 'No empty spaces';
+        }
+        
 
         if (num === 1) {
             game.turn = 2
